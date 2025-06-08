@@ -21,22 +21,18 @@ Plataforma e-commerce para vendas de móveis com controle de acesso baseado em f
 git clone [seu-repositorio]
 cd [nome-do-repositorio]
 
-# Crie a estrutura de dados necessária
-mkdir -p docs/data
-
-# Crie os arquivos JSON iniciais (vazios por enquanto)
-echo "[]" > docs/data/users.json
-echo "[]" > docs/data/products.json
-echo "[]" > docs/data/categories.json
-echo "[]" > docs/data/colors.json
-echo "[]" > docs/data/pricing-tables.json
-echo "[]" > docs/data/promotions.json
-echo "[]" > docs/data/announcements.json
-
-# Faça commit das mudanças
+# A estrutura docs/ já está incluída no projeto
+# Faça commit das mudanças (removendo qualquer token do histórico se necessário)
 git add .
-git commit -m "Add initial data structure for GitHub Pages"
-git push origin main
+git commit -m "Initial commit - furniture store system"
+
+# Se houver problemas com tokens no histórico, use uma branch limpa:
+git checkout --orphan clean-main
+git add .
+git commit -m "Initial commit - furniture store system (clean)"
+git branch -D main
+git branch -m main
+git push origin main --force
 ```
 
 ### 2. Configurar GitHub Pages
@@ -72,18 +68,24 @@ git push origin main
    - **Repositório**: nome do seu repositório
    - **Token**: o token gerado no passo 3
 
-### 5. Build para Produção
+### 5. Build para GitHub Pages
 
 ```bash
 # Instalar dependências
 npm install
 
-# Build para produção
-npm run build
+# Build otimizado para GitHub Pages
+node build-for-github-pages.js
 
-# Os arquivos serão gerados na pasta 'dist'
-# Para GitHub Pages, você pode usar GitHub Actions ou fazer build local
+# Ou manualmente:
+cd client && vite build --outDir=../docs --base="./"
 ```
+
+O script `build-for-github-pages.js` automaticamente:
+- Preserva dados existentes na pasta `docs/data/`
+- Faz build da aplicação para a pasta `docs/`
+- Garante que `.nojekyll` existe
+- Configura paths corretos para GitHub Pages
 
 ### 6. Configuração Opcional com GitHub Actions
 
