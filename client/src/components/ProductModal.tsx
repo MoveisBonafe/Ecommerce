@@ -183,7 +183,7 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
                           ? 'border-gray-900'
                           : 'border-gray-300'
                       }`}
-                      style={{ backgroundColor: color.hex }}
+                      style={{ backgroundColor: color.hexValue }}
                       title={color.name}
                     />
                   ))}
