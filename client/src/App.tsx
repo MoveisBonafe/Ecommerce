@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Router } from "wouter";
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
 import { DataProvider } from '@/contexts/DataContext';
@@ -30,24 +30,29 @@ function AppContent() {
     return <LoginForm />;
   }
 
+  // Detect GitHub Pages base path
+  const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/Ecommerce/') ? '/Ecommerce' : '';
+
   return (
     <DataProvider>
       <CartProvider>
-        <Switch>
-          <Route path="/" component={() => {
-            switch (user.type) {
-              case 'admin':
-                return <AdminDashboard />;
-              case 'loja':
-                return <StoreDashboard />;
-              case 'restaurante':
-                return <RestaurantDashboard />;
-              default:
-                return <NotFound />;
-            }
-          }} />
-          <Route component={NotFound} />
-        </Switch>
+        <Router base={basePath}>
+          <Switch>
+            <Route path="/" component={() => {
+              switch (user.type) {
+                case 'admin':
+                  return <AdminDashboard />;
+                case 'loja':
+                  return <StoreDashboard />;
+                case 'restaurante':
+                  return <RestaurantDashboard />;
+                default:
+                  return <NotFound />;
+              }
+            }} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
       </CartProvider>
     </DataProvider>
   );
