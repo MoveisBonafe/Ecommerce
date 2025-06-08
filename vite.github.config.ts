@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/Ecommerce/", // Set the correct base path for your GitHub repository
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "client", "src"),
@@ -12,23 +13,23 @@ export default defineConfig({
     },
   },
   root: path.resolve(__dirname, "client"),
-  base: "./",
   build: {
-    outDir: path.resolve(__dirname, "docs-temp"),
+    outDir: path.resolve(__dirname, "docs"),
     emptyOutDir: true,
     assetsDir: "assets",
     rollupOptions: {
       output: {
         manualChunks: undefined,
-        assetFileNames: "assets/[name]-[hash][extname]",
-        chunkFileNames: "assets/[name]-[hash].js",
-        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
       },
     },
   },
   server: {
     fs: {
-      allow: ['..']
-    }
+      strict: true,
+      deny: ["**/.*"],
+    },
   },
 });
