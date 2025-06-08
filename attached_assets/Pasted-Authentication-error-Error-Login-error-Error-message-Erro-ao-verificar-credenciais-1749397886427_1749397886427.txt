@@ -1,0 +1,38 @@
+Authentication error: 
+Error {}
+
+Login error: 
+Error {}
+message: "Erro ao verificar credenciais. Verifique sua conexão."
+stack: "Error: Erro ao verificar credenciais. Verifique sua conexão.↵ at AuthService.authenticateUser (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/src/lib/auth.ts:31:13)↵ at async login (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/src/contexts/AuthContext.tsx:43:33)↵ at async handleSubmit (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/src/components/LoginForm.tsx:36:21)"
+get stack: ƒ ()
+set stack: ƒ ()
+length: 1
+name: ""
+[[Prototype]]: ƒ ()
+apply: ƒ apply()
+arguments: "'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them"
+get arguments: ƒ ()
+set arguments: ƒ ()
+bind: ƒ bind()
+call: ƒ call()
+caller: "'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them"
+get caller: ƒ ()
+set caller: ƒ ()
+constructor: ƒ Function()
+length: 1
+name: ""
+toString: ƒ toString()
+Symbol(Symbol.hasInstance): undefined
+[[Prototype]]: Object
+[[Prototype]]: Object
+constructor: ƒ Error()
+message: "Erro ao verificar credenciais. Verifique sua conexão."
+name: "Error"
+toString: ƒ toString()
+[[Prototype]]: Object
+
+at t.value (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://50529cc8-bd77-40ef-b53d-d9b14360e5ad-00-36m7ivtkuimrc.janeway.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
