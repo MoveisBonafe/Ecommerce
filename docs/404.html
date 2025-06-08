@@ -59,16 +59,27 @@
     </div>
     
     <script>
-        // GitHub Pages SPA routing fix
-        const segments = window.location.pathname.slice(1).split('/');
-        const basePath = segments[0] === 'Ecommerce' ? '/Ecommerce' : '';
-        
-        // Store the current path and redirect to index.html
-        if (window.location.pathname !== basePath + '/' && 
-            window.location.pathname !== basePath + '/index.html') {
-            sessionStorage.setItem('pathToRedirect', window.location.pathname + window.location.search + window.location.hash);
-            window.location.replace(basePath + '/');
-        }
+        // GitHub Pages SPA routing fix - detect base path dynamically
+        (function() {
+            var path = window.location.pathname;
+            var basePath = '';
+            
+            // Check if we're on GitHub Pages
+            if (path.includes('/Ecommerce/')) {
+                basePath = '/Ecommerce';
+            } else if (path.split('/').length > 2) {
+                var segments = path.split('/').filter(s => s);
+                if (segments.length > 0) {
+                    basePath = '/' + segments[0];
+                }
+            }
+            
+            // Store the current path and redirect to index.html
+            if (path !== basePath + '/' && path !== basePath + '/index.html') {
+                sessionStorage.setItem('pathToRedirect', path + window.location.search + window.location.hash);
+                window.location.replace(basePath + '/');
+            }
+        })();
     </script>
 </body>
 </html>

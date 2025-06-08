@@ -4,23 +4,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Sistema de Vendas - Móveis</title>
-    <script src="./spa-redirect.js"></script>
-    <script type="module" crossorigin src="./assets/index-C2v37H1W.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B0wCr67h.css">
+    <script>
+      // Detect GitHub Pages base path and load assets dynamically
+      (function() {
+        var path = window.location.pathname;
+        var basePath = '';
+        
+        // Check if we're on GitHub Pages (contains repository name)
+        if (path.includes('/Ecommerce/')) {
+          basePath = '/Ecommerce';
+        } else if (path.split('/').length > 2) {
+          // Extract repository name from path
+          var segments = path.split('/').filter(s => s);
+          if (segments.length > 0) {
+            basePath = '/' + segments[0];
+          }
+        }
+        
+        // Load CSS
+        var css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.crossOrigin = 'anonymous';
+        css.href = basePath + '/assets/index-B0wCr67h.css';
+        document.head.appendChild(css);
+        
+        // GitHub Pages SPA routing fix
+        if (window.location.search[1] === '/') {
+          var decoded = window.location.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?')
+          window.history.replaceState(null, null,
+            window.location.pathname.slice(0, -1) + decoded + window.location.hash
+          )
+        }
+        
+        // Store base path for later use
+        window.__basePath = basePath;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <!-- GitHub Pages SPA routing fix -->
+    
     <script>
+      // Load main application script with correct path
       (function() {
-        const redirect = sessionStorage.getItem('pathToRedirect');
+        var script = document.createElement('script');
+        script.type = 'module';
+        script.crossOrigin = 'anonymous';
+        script.src = (window.__basePath || '') + '/assets/index-C2v37H1W.js';
+        document.body.appendChild(script);
+        
+        // GitHub Pages SPA routing fix
+        var redirect = sessionStorage.getItem('pathToRedirect');
         if (redirect) {
           sessionStorage.removeItem('pathToRedirect');
           history.replaceState(null, null, redirect);
         }
       })();
     </script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
 </html>
