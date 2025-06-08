@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const { execSync } = require('child_process');
+import fs from 'fs';
+import path from 'path';
+import { execSync } from 'child_process';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 console.log('🚀 Building for GitHub Pages...');
 
@@ -26,15 +30,15 @@ if (fs.existsSync(dataPath)) {
   });
 }
 
-// 2. Build the project (builds to dist/public)
+// 2. Build the project directly to docs (excluding data folder)
 console.log('📦 Building project...');
-execSync('vite build --outDir=dist/github-pages --base="./"', { 
+execSync('npx vite build --outDir=../docs-temp --base="./"', { 
   stdio: 'inherit',
   cwd: path.join(__dirname, 'client')
 });
 
 // 3. Copy built files to docs
-const distPath = path.join(__dirname, 'dist', 'github-pages');
+const distPath = path.join(__dirname, 'docs-temp');
 if (fs.existsSync(distPath)) {
   console.log('📋 Copying built files to docs/...');
   
