@@ -306,6 +306,262 @@ export function DataProvider({ children }: DataProviderProps) {
     }
   };
 
+  // Product CRUD operations
+  const addProduct = async (productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const newProduct: Product = {
+      ...productData,
+      id: `product-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const updatedProducts = [...products, newProduct];
+    setProducts(updatedProducts);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.products, updatedProducts, 'Add new product');
+    } catch (error) {
+      localStorage.setItem('furniture_store_products', JSON.stringify(updatedProducts));
+    }
+  };
+
+  const updateProduct = async (id: string, productData: Partial<Product>) => {
+    const updatedProducts = products.map(product =>
+      product.id === id
+        ? { ...product, ...productData, updatedAt: new Date().toISOString() }
+        : product
+    );
+    setProducts(updatedProducts);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.products, updatedProducts, `Update product ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_products', JSON.stringify(updatedProducts));
+    }
+  };
+
+  const deleteProduct = async (id: string) => {
+    const updatedProducts = products.filter(product => product.id !== id);
+    setProducts(updatedProducts);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.products, updatedProducts, `Delete product ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_products', JSON.stringify(updatedProducts));
+    }
+  };
+
+  // Category CRUD operations
+  const addCategory = async (categoryData: Omit<Category, 'id' | 'createdAt' | 'productCount'>) => {
+    const newCategory: Category = {
+      ...categoryData,
+      id: `cat-${Date.now()}`,
+      productCount: 0,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedCategories = [...categories, newCategory];
+    setCategories(updatedCategories);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.categories, updatedCategories, 'Add new category');
+    } catch (error) {
+      localStorage.setItem('furniture_store_categories', JSON.stringify(updatedCategories));
+    }
+  };
+
+  const updateCategory = async (id: string, categoryData: Partial<Category>) => {
+    const updatedCategories = categories.map(category =>
+      category.id === id ? { ...category, ...categoryData } : category
+    );
+    setCategories(updatedCategories);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.categories, updatedCategories, `Update category ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_categories', JSON.stringify(updatedCategories));
+    }
+  };
+
+  const deleteCategory = async (id: string) => {
+    const updatedCategories = categories.filter(category => category.id !== id);
+    setCategories(updatedCategories);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.categories, updatedCategories, `Delete category ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_categories', JSON.stringify(updatedCategories));
+    }
+  };
+
+  // Color CRUD operations
+  const addColor = async (colorData: Omit<Color, 'id' | 'createdAt'>) => {
+    const newColor: Color = {
+      ...colorData,
+      id: `color-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedColors = [...colors, newColor];
+    setColors(updatedColors);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.colors, updatedColors, 'Add new color');
+    } catch (error) {
+      localStorage.setItem('furniture_store_colors', JSON.stringify(updatedColors));
+    }
+  };
+
+  const updateColor = async (id: string, colorData: Partial<Color>) => {
+    const updatedColors = colors.map(color =>
+      color.id === id ? { ...color, ...colorData } : color
+    );
+    setColors(updatedColors);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.colors, updatedColors, `Update color ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_colors', JSON.stringify(updatedColors));
+    }
+  };
+
+  const deleteColor = async (id: string) => {
+    const updatedColors = colors.filter(color => color.id !== id);
+    setColors(updatedColors);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.colors, updatedColors, `Delete color ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_colors', JSON.stringify(updatedColors));
+    }
+  };
+
+  // Pricing Table CRUD operations
+  const addPricingTable = async (tableData: Omit<PricingTable, 'id' | 'createdAt'>) => {
+    const newTable: PricingTable = {
+      ...tableData,
+      id: `pricing-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedTables = [...pricingTables, newTable];
+    setPricingTables(updatedTables);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.pricingTables, updatedTables, 'Add new pricing table');
+    } catch (error) {
+      localStorage.setItem('furniture_store_pricing_tables', JSON.stringify(updatedTables));
+    }
+  };
+
+  const updatePricingTable = async (id: string, tableData: Partial<PricingTable>) => {
+    const updatedTables = pricingTables.map(table =>
+      table.id === id ? { ...table, ...tableData } : table
+    );
+    setPricingTables(updatedTables);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.pricingTables, updatedTables, `Update pricing table ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_pricing_tables', JSON.stringify(updatedTables));
+    }
+  };
+
+  const deletePricingTable = async (id: string) => {
+    const updatedTables = pricingTables.filter(table => table.id !== id);
+    setPricingTables(updatedTables);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.pricingTables, updatedTables, `Delete pricing table ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_pricing_tables', JSON.stringify(updatedTables));
+    }
+  };
+
+  // Promotion CRUD operations
+  const addPromotion = async (promotionData: Omit<Promotion, 'id' | 'createdAt'>) => {
+    const newPromotion: Promotion = {
+      ...promotionData,
+      id: `promo-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedPromotions = [...promotions, newPromotion];
+    setPromotions(updatedPromotions);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.promotions, updatedPromotions, 'Add new promotion');
+    } catch (error) {
+      localStorage.setItem('furniture_store_promotions', JSON.stringify(updatedPromotions));
+    }
+  };
+
+  const updatePromotion = async (id: string, promotionData: Partial<Promotion>) => {
+    const updatedPromotions = promotions.map(promotion =>
+      promotion.id === id ? { ...promotion, ...promotionData } : promotion
+    );
+    setPromotions(updatedPromotions);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.promotions, updatedPromotions, `Update promotion ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_promotions', JSON.stringify(updatedPromotions));
+    }
+  };
+
+  const deletePromotion = async (id: string) => {
+    const updatedPromotions = promotions.filter(promotion => promotion.id !== id);
+    setPromotions(updatedPromotions);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.promotions, updatedPromotions, `Delete promotion ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_promotions', JSON.stringify(updatedPromotions));
+    }
+  };
+
+  // Announcement CRUD operations
+  const addAnnouncement = async (announcementData: Omit<Announcement, 'id' | 'createdAt'>) => {
+    const newAnnouncement: Announcement = {
+      ...announcementData,
+      id: `ann-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+    };
+
+    const updatedAnnouncements = [...announcements, newAnnouncement];
+    setAnnouncements(updatedAnnouncements);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.announcements, updatedAnnouncements, 'Add new announcement');
+    } catch (error) {
+      localStorage.setItem('furniture_store_announcements', JSON.stringify(updatedAnnouncements));
+    }
+  };
+
+  const updateAnnouncement = async (id: string, announcementData: Partial<Announcement>) => {
+    const updatedAnnouncements = announcements.map(announcement =>
+      announcement.id === id ? { ...announcement, ...announcementData } : announcement
+    );
+    setAnnouncements(updatedAnnouncements);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.announcements, updatedAnnouncements, `Update announcement ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_announcements', JSON.stringify(updatedAnnouncements));
+    }
+  };
+
+  const deleteAnnouncement = async (id: string) => {
+    const updatedAnnouncements = announcements.filter(announcement => announcement.id !== id);
+    setAnnouncements(updatedAnnouncements);
+
+    try {
+      await github.writeJsonFile(DATA_PATHS.announcements, updatedAnnouncements, `Delete announcement ${id}`);
+    } catch (error) {
+      localStorage.setItem('furniture_store_announcements', JSON.stringify(updatedAnnouncements));
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -320,6 +576,24 @@ export function DataProvider({ children }: DataProviderProps) {
     isLoading,
     error,
     refetch: fetchData,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    addColor,
+    updateColor,
+    deleteColor,
+    addPricingTable,
+    updatePricingTable,
+    deletePricingTable,
+    addPromotion,
+    updatePromotion,
+    deletePromotion,
+    addAnnouncement,
+    updateAnnouncement,
+    deleteAnnouncement,
   };
 
   return (

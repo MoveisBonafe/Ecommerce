@@ -6,9 +6,10 @@ import { ColorsTab } from '@/components/admin/ColorsTab';
 import { PricingTab } from '@/components/admin/PricingTab';
 import { PromotionsTab } from '@/components/admin/PromotionsTab';
 import { AnnouncementsTab } from '@/components/admin/AnnouncementsTab';
-import { Box, Tags, Palette, DollarSign, Percent, Megaphone } from 'lucide-react';
+import { GitHubTab } from '@/components/admin/GitHubTab';
+import { Box, Tags, Palette, DollarSign, Percent, Megaphone, Github } from 'lucide-react';
 
-type AdminTab = 'produtos' | 'categorias' | 'cores' | 'precos' | 'promocoes' | 'avisos';
+type AdminTab = 'produtos' | 'categorias' | 'cores' | 'precos' | 'promocoes' | 'avisos' | 'github';
 
 const tabs = [
   { id: 'produtos' as AdminTab, label: 'Produtos', icon: Box },
@@ -17,6 +18,7 @@ const tabs = [
   { id: 'precos' as AdminTab, label: 'Tabelas de Preço', icon: DollarSign },
   { id: 'promocoes' as AdminTab, label: 'Promoções', icon: Percent },
   { id: 'avisos' as AdminTab, label: 'Avisos', icon: Megaphone },
+  { id: 'github' as AdminTab, label: 'GitHub Token', icon: Github },
 ];
 
 export function AdminDashboard() {
@@ -36,6 +38,8 @@ export function AdminDashboard() {
         return <PromotionsTab />;
       case 'avisos':
         return <AnnouncementsTab />;
+      case 'github':
+        return <GitHubTab />;
       default:
         return <ProductsTab />;
     }
