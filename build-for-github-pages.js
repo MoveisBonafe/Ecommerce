@@ -32,7 +32,8 @@ if (fs.existsSync(dataPath)) {
 
 // 2. Build the project with correct base path
 console.log('📦 Building project...');
-execSync('npx vite build --outDir=../docs-temp --base="./"', { 
+process.env.NODE_ENV = 'production';
+execSync('npx vite build --outDir=../docs-temp --base="./" --mode=production', { 
   stdio: 'inherit',
   cwd: path.join(__dirname, 'client')
 });
