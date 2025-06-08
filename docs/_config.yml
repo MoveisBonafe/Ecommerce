@@ -1,0 +1,13 @@
+include:
+  - "_*_.html"
+  - "_*_.json"
+  - "_*_.yml"
+  - ".nojekyll"
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: none
+
+plugins: []

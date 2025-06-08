@@ -30,14 +30,39 @@ if (fs.existsSync(dataPath)) {
   });
 }
 
-// 2. Build the project directly to docs (excluding data folder)
+// 2. Build the project with correct base path
 console.log('📦 Building project...');
 execSync('npx vite build --outDir=../docs-temp --base="./"', { 
   stdio: 'inherit',
   cwd: path.join(__dirname, 'client')
 });
 
-// 3. Copy built files to docs
+// 3. Fix HTML paths for GitHub Pages
+const tempIndexPath = path.join(__dirname, 'docs-temp', 'index.html');
+if (fs.existsSync(tempIndexPath)) {
+  let htmlContent = fs.readFileSync(tempIndexPath, 'utf8');
+  htmlContent = htmlContent.replace(/href="\/assets\//g, 'href="./assets/');
+  htmlContent = htmlContent.replace(/src="\/assets\//g, 'src="./assets/');
+  
+  // Add SPA routing fix
+  const routingFix = `
+    <!-- GitHub Pages SPA routing fix -->
+    <script>
+      (function() {
+        const redirect = sessionStorage.getItem('pathToRedirect');
+        if (redirect) {
+          sessionStorage.removeItem('pathToRedirect');
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>`;
+  
+  htmlContent = htmlContent.replace('<div id="root"></div>', `<div id="root"></div>${routingFix}`);
+  fs.writeFileSync(tempIndexPath, htmlContent, 'utf8');
+  console.log('📄 Fixed HTML paths for GitHub Pages');
+}
+
+// 4. Copy built files to docs
 const distPath = path.join(__dirname, 'docs-temp');
 if (fs.existsSync(distPath)) {
   console.log('📋 Copying built files to docs/...');
